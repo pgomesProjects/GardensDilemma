@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public float speed = 900f;
     float horizontal = 0f;
+    private bool jump = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +21,17 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal") * speed;
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            jump = true;
+        }
     }
 
     void FixedUpdate()
     {
         //Horizontal movement
-        controller.Move(horizontal * Time.deltaTime, false, false);
+        controller.Move(horizontal * Time.fixedDeltaTime, false, jump);
+        jump = false;
     }
 }
