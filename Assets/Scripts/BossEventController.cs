@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossEventController : MonoBehaviour
 {
     public GameObject bossSprite;
+    public GameObject timer;
     public float moveTime;
     public float yPos;
 
@@ -28,7 +29,11 @@ public class BossEventController : MonoBehaviour
         {
             bossActive = true;
             timeStartedMove = Time.time;
+            //Activate timer
+            timer.SetActive(true);
+            timer.GetComponent<TimerData>().isTimed = true;
         }
+
     }//end of OnTriggerEnter2D
     public Vector3 UseLerp(Vector3 start, Vector3 end, float timeStarted, float lerpTime = 1)
     {
