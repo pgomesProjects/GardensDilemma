@@ -6,6 +6,8 @@ public class CandleController : MonoBehaviour
 {
     public int candleOrderNumber;
     public BarrierController barrierToUnlock;
+    public Sprite activeSprite;
+
     private bool canActivate;
     private bool isActivated;
 
@@ -30,6 +32,7 @@ public class CandleController : MonoBehaviour
                 {
                     Debug.Log("Candle " + candleOrderNumber + " Successfully Activated!");
                     isActivated = true;
+                    gameObject.GetComponent<SpriteRenderer>().sprite = activeSprite;
                     barrierToUnlock.checkForUnlock(candleOrderNumber);
                 }
                 else
@@ -39,6 +42,7 @@ public class CandleController : MonoBehaviour
                     {
                         isActivated = true;
                         Debug.Log("Candle " + candleOrderNumber + " Successfully Activated!");
+                        gameObject.GetComponent<SpriteRenderer>().sprite = activeSprite;
                         barrierToUnlock.checkForUnlock(candleOrderNumber);
                     }
                 }
