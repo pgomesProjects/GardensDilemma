@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FindObjectOfType<AudioManager>().Play("LevelBGM", 1.0f);
+        FindObjectOfType<AudioManager>().Play("LevelBGM", PlayerPrefs.GetFloat("MusicVol"));
         isPaused = false;
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
@@ -59,6 +59,7 @@ public class LevelManager : MonoBehaviour
     {
         //Goes to main level
         FindObjectOfType<AudioManager>().ChangePitch("LevelBGM", 1.0f);
+        FindObjectOfType<AudioManager>().Stop("LevelBGM");
         SceneManager.LoadScene("MainLevel");
     }//end of RetryGame
 
@@ -66,6 +67,7 @@ public class LevelManager : MonoBehaviour
     {
         //Goes to main menu
         FindObjectOfType<AudioManager>().ChangePitch("LevelBGM", 1.0f);
+        FindObjectOfType<AudioManager>().Stop("LevelBGM");
         SceneManager.LoadScene("MainMenu");
     }//end of ReturnMenu
 
