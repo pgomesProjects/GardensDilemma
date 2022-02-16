@@ -19,6 +19,8 @@ public class TimerUntilMain : MonoBehaviour
             currentTime += Time.deltaTime;
             if (currentTime >= timeUntilMain)
             {
+                FindObjectOfType<AudioManager>().Stop("LevelBGM");
+                FindObjectOfType<AudioManager>().ChangePitch("LevelBGM", 1.0f);
                 //Goes to main menu
                 SceneManager.LoadScene("MainMenu");
             }

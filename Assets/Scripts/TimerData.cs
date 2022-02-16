@@ -32,8 +32,8 @@ public class TimerData : MonoBehaviour
 
         if (currentTime <= 0)
         {
-            currentTime = 0;
-            // Your Code Here
+            LevelManager.isGameActive = false;
+            isTimed = false;
         }
 
         if(isTimed)

@@ -8,6 +8,10 @@ public class CandleController : MonoBehaviour
     public BarrierController barrierToUnlock;
     public Sprite activeSprite;
 
+    public GameObject interactText;
+    public GameObject errorText;
+    public GameObject interactGlow;
+
     private bool canActivate;
     private bool isActivated;
 
@@ -33,30 +37,58 @@ public class CandleController : MonoBehaviour
                     Debug.Log("Candle " + candleOrderNumber + " Successfully Activated!");
                     isActivated = true;
                     gameObject.GetComponent<SpriteRenderer>().sprite = activeSprite;
+                    interactText.SetActive(false);
+                    interactGlow.SetActive(false);
+                    errorText.SetActive(false);
                     barrierToUnlock.checkForUnlock(candleOrderNumber);
                 }
                 else
                 {
                     //If the candle previous to the last is activated, activate this current one
-                    if(barrierToUnlock.allCandles[candleOrderNumber - 1].isActivated)
+                    if (barrierToUnlock.allCandles[candleOrderNumber - 1].isActivated)
                     {
                         isActivated = true;
                         Debug.Log("Candle " + candleOrderNumber + " Successfully Activated!");
                         gameObject.GetComponent<SpriteRenderer>().sprite = activeSprite;
+                        interactText.SetActive(false);
+                        interactGlow.SetActive(false);
+                        errorText.SetActive(false);
                         barrierToUnlock.checkForUnlock(candleOrderNumber);
                     }
+                    else
+                        StartCoroutine(FailMessage());
                 }
             }
         }
     }
 
+    IEnumerator FailMessage()
+    {
+        errorText.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+
+        errorText.SetActive(false);
+    }//end of FailMessage
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         canActivate = true;
+        if (!isActivated)
+        {
+            interactText.SetActive(true);
+            interactGlow.SetActive(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         canActivate = false;
+        if (!isActivated)
+        {
+            interactText.SetActive(false);
+            interactGlow.SetActive(false);
+            errorText.SetActive(false);
+        }
     }
 }

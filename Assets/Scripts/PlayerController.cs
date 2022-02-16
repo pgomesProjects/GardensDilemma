@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     float horizontal = 0f;
     private bool jump = false;
 
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal") * speed;
+
+        animator.SetFloat("PlayerX", Mathf.Abs(horizontal));
 
         if (Input.GetButtonDown("Jump"))
         {

@@ -29,6 +29,9 @@ public class BossEventController : MonoBehaviour
         {
             bossActive = true;
             timeStartedMove = Time.time;
+
+            FindObjectOfType<AudioManager>().ChangePitch("LevelBGM", 3.5f);
+
             //Activate timer
             timer.SetActive(true);
             timer.GetComponent<TimerData>().isTimed = true;

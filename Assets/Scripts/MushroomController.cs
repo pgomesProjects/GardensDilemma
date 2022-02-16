@@ -11,7 +11,7 @@ public class MushroomController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Bounce!");
+            GetComponent<Animator>().SetTrigger("PlayerBounce");
             collision.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, bouncePower));
         }
     }

@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
 {
 
     public GameObject pauseMenu;
+    public GameObject gameOverMenu;
 
     public static bool isPaused;
     public static bool isGameActive;
@@ -17,6 +18,7 @@ public class LevelManager : MonoBehaviour
         FindObjectOfType<AudioManager>().Play("LevelBGM", 1.0f);
         isPaused = false;
         pauseMenu.SetActive(false);
+        gameOverMenu.SetActive(false);
         isGameActive = true;
     }
 
@@ -30,9 +32,16 @@ public class LevelManager : MonoBehaviour
             else
                 Unpause();
         }
+        //If the game is not active and the game has not been won, it is a game over
+        else if(!isGameActive && !TimerUntilMain.isWon)
+        {
+            FindObjectOfType<AudioManager>().Stop("LevelBGM");
+            gameOverMenu.SetActive(true);
+        }
     }
     public void Pause()
     {
+        FindObjectOfType<AudioManager>().Pause("LevelBGM");
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
@@ -40,15 +49,23 @@ public class LevelManager : MonoBehaviour
 
     public void Unpause()
     {
+        FindObjectOfType<AudioManager>().Resume("LevelBGM");
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
     }//end of Unpause
 
+    public void RetryGame()
+    {
+        //Goes to main level
+        FindObjectOfType<AudioManager>().ChangePitch("LevelBGM", 1.0f);
+        SceneManager.LoadScene("MainLevel");
+    }//end of RetryGame
+
     public void ReturnMenu()
     {
-        Time.timeScale = 1f;
         //Goes to main menu
+        FindObjectOfType<AudioManager>().ChangePitch("LevelBGM", 1.0f);
         SceneManager.LoadScene("MainMenu");
     }//end of ReturnMenu
 
